@@ -1,6 +1,6 @@
 extends KinematicBody
 
-var run_speed : float 
+var run_speed : float
 var sidestep_speed : float = 5.0
 var velocity := Vector3()
 var gravity : float
@@ -26,13 +26,24 @@ func _physics_process(delta):
 	
 	var sideways : float = 0.0
 	
-	if Input. is_action_pressed("move_right"):
+	if Input.is_action_pressed("move_right"):
 		sideways += 1.0
 	
-	if Input. is_action_pressed("move_left"):
+	if Input.is_action_pressed("move_left"):
 		sideways -= 1.0
 	
-	velocity.x = sideways *sidestep_speed
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_speed
+	
+	velocity.y -= gravity * delta
+	velocity.x = sideways * sidestep_speed
 	velocity.z = -run_speed
 	
-	move_and_slide(velocity)
+	velocity = move_and_slide(velocity, Vector3.UP)
+	
+	for index in range(get_slide_count()):
+		var collision = get_slide_collision(index)
+		var collision_object = collision.collider as CollisionObject
+		if collision_object.collision_layer & 4:
+			print("ouch")
+			get_tree().reload_current_scene()
