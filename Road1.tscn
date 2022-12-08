@@ -31,5 +31,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52698, 0.6, -3.81839 )
 [node name="lowpolytree" type="MeshInstance" parent="enviroment" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5029, 2.03477, -39.7504 )
 mesh = ExtResource( 3 )
-material/0 = null
-material/1 = null
